@@ -1,6 +1,7 @@
 % Pharo poster -- A1 portrait.  Compile TWICE with pdflatex, lualatex or xelatex (TikZ overlay needs 2 runs)
 % Figures expected in figures/: pharo-logo.pdf, pharo-beacon.pdf
-% Optional: figures/inria.pdf (white Inria logo); a text fallback is used otherwise.
+% Also uses figures/inria-transparent.pdf: newINRIALogo_En.pdf without its white
+% background and with the grey "informatics mathematics" text turned white.
 \documentclass{article}
 \usepackage[paperwidth=594mm,paperheight=841mm,margin=0mm]{geometry}
 \usepackage{iftex}
@@ -35,8 +36,11 @@
 \newcommand{\fs}[1]{\fontsize{#1}{1.2\dimexpr#1pt\relax}\selectfont}
 \newcommand{\num}[1]{{\heavy\fs{52}#1}}                 % big number
 \newcommand{\stat}[2]{\num{#1}\,\,#2\par\vspace{4mm}}   % number + label
+\newcommand{\mstat}[2]{{\heavy\fs{42}#1}\,\,{\fs{28}#2}\par\vspace{2mm}} % compact stat for the MOOC columns
 \newcommand{\head}[1]{{\heavy\fs{62}#1}}                 % section heading
-\newcommand{\url}[1]{{\fs{40}#1}}
+\newcommand{\web}{\faGlobe\,\,}                          % marks a web address
+\newcommand{\url}[1]{{\fs{32}\web#1}}
+\newcommand{\headurl}[2]{\head{#1}\\[2mm]\url{#2}}   % heading with its web address right below, left-aligned
 
 \begin{document}
 \fs{31}%
@@ -100,49 +104,61 @@
     \stat{98}{committers}};
 
   % industrial consortium
-  \node at (0.075,0.430) {\fs{80}\faIndustry};
-  \node at (0.165,0.425) {\head{Industrial Consortium}\\[-0.5mm]\url{https://consortium.pharo.org}};
-  \node[text width=0.50\paperwidth] at (0.10,0.475) {%
+  \node at (0.075,0.417) {\fs{80}\faIndustry};
+  \node at (0.165,0.410) {\headurl{Industrial Consortium}{consortium.pharo.org}};
+  \node[text width=0.50\paperwidth] at (0.10,0.459) {%
     To structure the community\\
-    To sustain the development of Pharo\par\vspace{2mm}
+    To sustain the development of Pharo\par\vspace{1mm}
     \num{21}\,\,industrial members /\,\,\num{28}\,\,academic members};
 
   % association
-  \node at (0.10,0.555) {\head{1 User Association}};
-  \node at (0.17,0.590) {\url{https://association.pharo.org}};
-  \node at (0.47,0.553) {\fs{100}\faUsers};
+  \node at (0.10,0.535) {\headurl{1 User Association}{association.pharo.org}};
+  \node at (0.47,0.533) {\fs{100}\faUsers};
 
   % books
-  \node at (0.09,0.640) {\head{29 open-source books}};
-  \node at (0.27,0.675) {\url{https://books.pharo.org}};
-  \node at (0.52,0.637) {\fs{100}\faBookOpen};
+  \node at (0.10,0.603) {\headurl{29 open-source books}{books.pharo.org}};
+  \node at (0.52,0.607) {\fs{100}\faBookOpen};
 
-  % mooc
-  \node at (0.07,0.716) {\fs{110}\faGraduationCap};
-  \node at (0.18,0.722) {\head{Two moocs}\\[-0.5mm]\quad\url{https://mooc.pharo.org}\\[-0.5mm]\quad\url{https://advanced-design-mooc.pharo.org}};
-  \node[text width=0.52\paperwidth] at (0.07,0.775) {%
-    {\itshape Covering Pharo, intro to advanced design, Pharo libraries
-    and web development}\par\vspace{5mm}
-    \num{10 K}\,\,participants\par\vspace{3mm}
-    \stat{93}{videos, 155 quiz}
-    \stat{6}{large exercises}
-    \stat{1}{full web application}
-    \stat{7}{challenges}};
+  % moocs: shared heading, then one column per mooc
+  \node at (0.07,0.672) {\fs{110}\faGraduationCap};
+  \node at (0.18,0.672) {\head{Two free MOOCs}};
+  \node at (0.18,0.708) {\num{15 K}\,\,participants from 100+ countries};
+  % column 1: Live Object Programming in Pharo
+  \node[text width=0.25\paperwidth] at (0.075,0.752) {%
+    {\heavy\fontsize{36}{39}\selectfont Live Object\\Programming in Pharo}\par\vspace{2mm}
+    {\fs{24}\web mooc.pharo.org}\par\vspace{5mm}
+    \mstat{93}{videos, 155 quiz}
+    \mstat{6}{large exercises}
+    \mstat{1}{full web application}
+    \mstat{7}{challenges}
+    {\fs{24}\itshape Dubbed EN \& FR\\Subtitles EN, FR, ES, JA}};
+  % thin separator between the two columns
+  \draw[white, opacity=0.5, line width=0.8mm] (0.345,0.755) -- (0.345,0.885);
+  % column 2: Advanced Object-Oriented Design
+  \node[text width=0.26\paperwidth] at (0.37,0.752) {%
+    {\heavy\fontsize{36}{39}\selectfont Advanced Object-\\Oriented Design}\par\vspace{2mm}
+    {\fs{24}\web advanced-design-mooc.pharo.org}\par\vspace{5mm}
+    \mstat{10}{modules}
+    \mstat{64}{lectures}
+    \mstat{1}{exercise book}
+    {\fs{28}Quizzes \& Open Badge}\par\vspace{3mm}
+    {\fs{24}\itshape Concepts valid in any OO language}};
   \end{scope}
 
-  % Inria logo (bottom of the blue panel)
-  \node[anchor=center] at (0.43,0.945) {%
-    \IfFileExists{figures/inria.pdf}
-      {\includegraphics[width=0.20\paperwidth]{figures/inria.pdf}}
-      {\color{white}\heavy\itshape\fs{110}Inria}};
+  % Inria logo, directly on the blue panel (transparent background)
+  \node[anchor=center, inner sep=0] at (0.40,0.945)
+    {\includegraphics[width=0.17\paperwidth]{figures/inria-transparent.pdf}};
+  % QR code to pharo.org, left of the Inria logo (keeps its white quiet zone to stay scannable)
+  \node[anchor=east, inner sep=0] at (0.285,0.945)
+    {\includegraphics[width=0.08\paperwidth]{figures/qrcode-pharo.pdf}};
 
   % ----- technology stack (bottom right) -----
-  \node[anchor=north east, align=right, text=ink] at (0.885,0.652)
+  \node[anchor=north east, align=right, text=ink] at (0.905,0.652)
        {\head{Technology}\\[-4mm]\head{Stack}};
-  \node[anchor=north west, text=ink] at (0.893,0.660) {\fs{90}\faPuzzlePiece};
+  \node[anchor=north west, text=ink] at (0.913,0.660) {\fs{90}\faPuzzlePiece};
 
   \node[anchor=north west, text width=0.27\paperwidth, text=ink, align=left, font=\fs{25}]
-       at (0.725,0.715) {%
+       at (0.745,0.715) {%
     \textbf{AI/MCP}\\
     \textbf{Moose}\\
     \textbf{Bloc, Toplo, Roassal}\\
