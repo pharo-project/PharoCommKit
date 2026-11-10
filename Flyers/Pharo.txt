@@ -1,0 +1,33 @@
+Pharo 
+http://www.pharo.org
+
+What is Pharo
+
+Pharo's goal is to deliver a clean, innovative, free open-source living object-oriented language and environment.  By providing a stable and small core system, excellent developer tools, and maintained releases, Pharo is an attractive platform to build and deploy mission critical applications. Pharo focuses on developing a flexible and advanced infrastructure that can be used by SMEs (Small and Medium Enterprises) as well as researchers. 
+
+Pharo as an ecosystem
+The goal of Pharo is to foster a healthy ecosystem of both private and commercial contributors who advance and maintain the core system and its external packages. In addition, Pharo wants to support a community of researchers in the domain of reengineering, language design, robotics and web development. Pharo is not only a core set of packages but more than 300 projects developed by external contributors and we should build an infrastructure to control the quality of the production. 
+	
+Pharo’ forgePharo is not only a core set of packages but more than 300 projects developed by external contributors and we should build an infrastructure to control the quality of the production.http://www.smalltalkhub.com 	It contains around 900 projects, 700 users and 90000 packages.
+
+Books:
+	Pharo by Example 2009 - (translated to french, spanish japonese)
+	Deep into Pharo (2013)
+
+
+Pharo for teaching 
+	Universities use Pharo to teach: 	Uni. of Bueno Aires	Uni. of Bern	Uni. of Brussels 	Ecole des Mines de Douai	Uni. de Savoie 	Ivan Franko Nat. Uni. of Lviv	Czech Technical Uni.	CULS Prague	Northern Michigan Uni. 	UTN (Argentina)	Uni. Catholic of Argentina 	Uni. of Santiago 	Uni. Policnica de Catalunya	Uni. of Saarland
+
+Pharo as a platform for research
+
+Some research groups use Pharo for their research.
+
+	Some research groups use Pharo: 	LAFHIS, AR	SCG, CH 	CEA-List, FR	CAR-EMD, FR	RMOD-Inria, FR	UMMISCO-IRD, FR	Reveal, CH 	LYSIC, FR	Pleiad, CL 
+
+Pharo was used a case studies in research papers.
+
+	• “How (and Why) Developers Use the Dynamic Features of Programming Languages: The Case of Smalltalk”, 	O. Calláu, R. Robbes, É. Tanter, D. Röthlisberger — EMSE, in press 	Empirical Software Engineering (Springer)	• “Extensions during Software Evolution: Do Objects Meet Their Promise? ”, 	R. Robbes, D. Röthlisberger, É. Tanter — ECOOP 2012, 26th European Conference on Object-Oriented Programming
+
+Pharo as a platform for business
+
+Pharo as a platform for businessCompanies use Pharo: 	http://www.romaxtech.com	http://www.netstyle.ch 	http://www.pinesoft.uk	http://www.cmsbox.com	http://smallworks.com.ar	http://www.2denker.de	http://www.inceptive.be	http://gemtalksystems.com	http://www.nidea.eu 	http://www.doslovno.info 	http://www.10pines.com	http://www.agilitic.com	http://www.ibizlog.com	http://www.ardishealth.com	http://www.airflowing.com 	http://www.majcon.de 	http://www.mindclue.ch 	http://www.synectique.eu	http://www.objectprofile.com	http://www.objectfusion.fr	http://www.square-i.net	http://yesplan.be	http://debrispublishing.com	http://www.beta9.be	http://delware.nlOther projects cannot be publicly revealed: For example, Pharo is used to deploy software to more than 6000 users in a large aircraft company.Consortium Companies support Pharo via a consortium: 	http://consortium.pharo.orgAdvanced consultants are available:	http://consultants.pharo.org

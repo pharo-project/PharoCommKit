@@ -1,0 +1,244 @@
+% By default, the contents of the back side of the ﬁnal sheet is
+% printed upside down. The option notumble suppresses that. Doing so
+% may be necessary to suit the behavior of certain printing engines.
+% Specifying [notumble] may also be useful during the writing of a
+% document, to enable proof-reading on the screen.
+\documentclass[notumble]{leaflet}
+%\documentclass{leaflet}
+
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\usepackage[default,scale=1]{opensans}
+% \renewcommand{\seriesdefault}{cl}
+\renewcommand{\bfdefault}{sb}
+% \renewcommand{\ttdefault}{fos}
+\renewcommand\ttfamily{%
+  \fontfamily{\ttdefault}%
+  % \fontseries{lc}%
+  \fontshape{\shapedefault}%
+  \selectfont}
+
+\usepackage{enumitem}
+\setlist{
+    topsep=0pt,
+    partopsep=0pt,
+    parsep=1ex,
+    nolistsep,
+    itemsep=.1ex
+}
+\setlength{\parskip}{1ex}
+
+% \newcommand{\myparagraph}[1]{\vspace{.6em}\textsc{#1}}
+\newcommand{\myparagraph}[1]{#1---}
+
+\usepackage[table,svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx,booktabs}
+\usepackage{alltt,textcomp}
+\usepackage{url}
+\urlstyle{sf}
+\usepackage{ifthen}
+\usepackage{xspace}
+
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\etal}{\emph{et al.,}\xspace}
+\newcommand{\ct}[1]{{\textsf{#1}}\xspace}
+
+\usepackage{microtype}
+
+\definecolor{light-gray}{rgb}{0.8,0.8,0.8}
+\definecolor{comment}{rgb}{0.35,0.35,0.35}
+\definecolor{string}{rgb}{0.5,0,0.5}
+\definecolor{darkRed}{rgb}{0.5,0,0}
+\definecolor{darkBlue}{rgb}{0,0,0.3}
+\definecolor{darkCyan}{rgb}{0,0.3,0.3}
+\definecolor{link}{rgb}{0.16,0.59,0.84}
+
+\makeatletter
+\newsavebox{\code@box}
+ \newenvironment{displaycode}{%
+     \par
+     % \begin{lrbox}{\code@box}%
+     \hspace{1.5em}\begin{minipage}{\linewidth}
+       \begin{alltt}\small}{
+       \end{alltt}
+     \end{minipage}
+     % \end{lrbox}
+     % \usebox{\code@box}%
+     \par}
+\makeatother
+
+
+% Use of english prevents babel from adding spaces before $:
+\newcommand{\code}[1]{\foreignlanguage{english}{\texttt{#1}}}
+
+\graphicspath{{./figures/}}
+
+\title{%
+  % \fontseries{cl}\selectfont\huge
+  % Cheat sheet\\
+  \vspace*{0.5\textwidth}%
+  \normalfont
+  \includegraphics[width=\linewidth]{logo.pdf}
+  \\[1.8\baselineskip]%
+  \fontseries{cl}\selectfont\Huge%
+  The Living\\ Language and Environment
+  % a clean, innovative, open-source Smalltalk-inspired environment\\
+  \vfill
+  \url{http://www.pharo.org}}
+
+\date{}
+
+\setmargins{8mm}{8mm}{8mm}{8mm}
+
+\CutLine*{1} \CutLine*{2} \CutLine*{3} \CutLine*{4} \CutLine*{5}
+\CutLine*{6}
+
+\usepackage[colorlinks=true, urlcolor=link, pdfborder={0 0 0}]{hyperref}
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\pagebreak{}
+
+Pharo's goal is to deliver a clean, innovative, free open-source
+living object-oriented language and environment. By providing a stable
+and small core system, excellent developer tools, and maintained
+releases, Pharo is an attractive platform to build and deploy mission
+critical applications. Pharo focuses on developing a flexible and
+advanced infrastructure that can be used by SMEs (Small and Medium
+Enterprises) as well as researchers.
+
+\section{Pharo as an ecosystem}
+
+The goal of Pharo is to foster a healthy ecosystem of both private and
+commercial contributors who advance and maintain the core system and
+its external packages. In addition, Pharo wants to support a community
+of researchers in the domain of reengineering, language design,
+robotics and web development.
+
+\section{Pharo’ forge}
+
+Pharo is not only a core set of packages but more than 300 projects developed by external contributors and we should build an infrastructure to control the quality of the production.
+
+\begin{center}
+\url{http://www.smalltalkhub.com}
+\end{center}
+
+
+It contains around 900 projects, 700 users and 90000 packages.
+
+\section{Books}
+
+\begin{itemize}
+\item Pharo by Example 2009 - (translated to french, spanish japanese)
+\item Deep into Pharo (2013)
+\end{itemize}
+
+\pagebreak{}
+
+\section{Pharo for teaching}
+
+Universities use Pharo to teach:
+
+\begin{itemize}
+\item Uni. of Buenos Aires
+\item Uni. of Bern
+\item Uni. of Brussels
+\item Ecole des Mines de Douai
+\item Uni. de Savoie
+\item Ivan Franko Nat. Uni. of Lviv
+\item Czech Technical Uni.
+\item CULS Prague
+\item Uni. of Quilmes
+\item Uni. of La Plata
+\item Northern Michigan Uni.
+\item Uni. Technologica Nacional (UTN)
+\item Uni. Catholic of Argentina
+\item Uni. of Santiago
+\item Uni. Policnica de Catalunya
+\item Uni. of Saarland
+\item Uni. of San Martin
+\item Uni. of Maroua
+\item Uni. de Bretagne Occidentale
+\item Uni. de Tomsk 
+\end{itemize}
+
+\section{Pharo as a platform for research}
+
+Some research groups use Pharo:
+
+\begin{itemize}
+\item LAFHIS, AR
+\item SCG, CH
+\item CEA-List, FR
+\item CAR-EMD, FR
+\item RMOD-Inria, FR
+\item UMMISCO-IRD, FR
+\item Reveal, CH
+\item LYSIC, FR
+\item IGEVET, AR
+\item Pleiad, CL
+\end{itemize}
+
+\pagebreak{}
+
+\section{Pharo as a platform for business}
+
+Companies use Pharo:
+
+\begin{itemize}
+\item \url{http://www.romaxtech.com}
+\item \url{http://www.netstyle.ch}
+\item \url{http://www.pinesoft.uk}
+\item \url{http://www.cmsbox.com}
+\item \url{http://smallworks.com.ar}
+\item \url{http://www.2denker.de}
+\item \url{http://www.inceptive.be}
+\item \url{http://gemtalksystems.com}
+\item \url{http://www.nidea.eu}
+\item \url{http://www.doslovno.info}
+\item \url{http://www.10pines.com}
+\item \url{http://www.agilitic.com}
+\item \url{http://www.ibizlog.com}
+\item \url{http://www.ardishealth.com}
+\item \url{http://www.airflowing.com}
+\item \url{http://www.majcon.de}
+\item \url{http://www.mindclue.ch}
+\item \url{http://www.synectique.eu}
+\item \url{http://www.objectprofile.com}
+\item \url{http://www.objectfusion.fr}
+\item \url{http://www.square-i.net}
+\item \url{http://yesplan.be}
+\item \url{http://debrispublishing.com}
+\item \url{http://www.beta9.be}
+\item \url{http://delware.nl}
+\end{itemize}
+
+Other projects cannot be publicly revealed: For example, Pharo is used to deploy software to more than 6000 users in a large aircraft company.
+
+\section{Consortium}
+
+Companies support Pharo via a consortium:
+\begin{center}
+  \url{http://consortium.pharo.org}
+\end{center}
+
+
+Advanced consultants are available:
+\begin{center}
+  \url{http://consultants.pharo.org}
+\end{center}
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
