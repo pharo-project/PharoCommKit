@@ -1,0 +1,168 @@
+% Pharo poster -- A1 portrait.  Compile TWICE with pdflatex, lualatex or xelatex (TikZ overlay needs 2 runs)
+% Figures expected in figures/: pharo-logo.pdf, pharo-beacon.pdf
+% Optional: figures/inria.pdf (white Inria logo); a text fallback is used otherwise.
+\documentclass{article}
+\usepackage[paperwidth=594mm,paperheight=841mm,margin=0mm]{geometry}
+\usepackage{iftex}
+\ifPDFTeX            % pdflatex: Type1 Fira Sans
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+  \usepackage[sfdefault,light,semibold]{FiraSans}
+  \newcommand{\heavy}{\fontseries{b}\selectfont}
+\else                % lualatex / xelatex: OpenType Fira Sans
+  \usepackage{fontspec}
+  \setmainfont{Fira Sans}[
+    UprightFont=*-Light, BoldFont=*-SemiBold, ItalicFont=*-LightItalic, BoldItalicFont=*-SemiBoldItalic]
+  \newfontfamily\heavy{Fira Sans}[UprightFont=*-Bold, ItalicFont=*-BoldItalic]
+\fi
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{fontawesome5}
+\pagestyle{empty}
+\hyphenpenalty=10000\exhyphenpenalty=10000
+\setlength{\parindent}{0pt}
+
+% ---------- colours ----------
+\definecolor{cream}{HTML}{F7F4EE}
+\definecolor{greybg}{HTML}{DCDEE6}
+\definecolor{blueA}{HTML}{4A78B5}
+\definecolor{blueB}{HTML}{2E5089}
+\definecolor{stripe}{HTML}{3E68A6}
+\definecolor{ink}{HTML}{1F2A3A}
+\definecolor{osigreen}{HTML}{3DA639}
+
+% ---------- helpers ----------
+\newcommand{\fs}[1]{\fontsize{#1}{1.2\dimexpr#1pt\relax}\selectfont}
+\newcommand{\num}[1]{{\heavy\fs{52}#1}}                 % big number
+\newcommand{\stat}[2]{\num{#1}\,\,#2\par\vspace{4mm}}   % number + label
+\newcommand{\head}[1]{{\heavy\fs{62}#1}}                 % section heading
+\newcommand{\url}[1]{{\fs{40}#1}}
+
+\begin{document}
+\fs{31}%
+\begin{tikzpicture}[remember picture, overlay,
+    x=\paperwidth, y=-\paperheight, shift={(current page.north west)}]
+
+  % ----- key points of the geometry (x,y as fractions; y goes down) -----
+  \coordinate (TL)  at (0,0);     \coordinate (TR) at (1,0);
+  \coordinate (BL)  at (0,1);     \coordinate (BR) at (1,1);
+  \coordinate (S1)  at (0.63,0);  \coordinate (S2) at (0.69,0);     % stripe top
+  \coordinate (C1)  at (0.43,0.25); \coordinate (C2) at (0.50,0.25); % stripe foot
+  \coordinate (M1)  at (0.69,0.635); \coordinate (M2) at (0.72,0.62); % middle joint
+  \coordinate (G2)  at (1,0.60);                                     % grey bottom right
+  \coordinate (B1)  at (0.63,1);                                     % blue bottom right
+
+  % ----- background panels -----
+  \fill[cream] (TL) rectangle (BR);
+  % grey lighthouse panel
+  \fill[greybg] (S2) -- (TR) -- (G2) -- (M2) -- (C2) -- cycle;
+  % blue diagonal stripe carrying pharo.org
+  \fill[stripe] (S1) -- (S2) -- (C2) -- (C1) -- cycle;
+  \node[rotate=61, text=white, font=\fs{48}, anchor=center]
+       at (0.607,0.075) {pharo.org};
+  % big blue panel
+  \shade[top color=blueA, bottom color=blueB]
+       (0,0.25) -- (C1) -- (M1) -- (B1) -- (BL) -- cycle;
+  % darker diagonal shading inside the blue panel
+  \fill[black, opacity=0.13]
+       (0.18,0.62) -- (0.55,0.45) -- (M1) -- (B1) -- (0.12,1) -- cycle;
+
+  % ----- large lighthouse, clipped to the grey panel -----
+  \begin{scope}
+    \clip (S2) -- (TR) -- (G2) -- (M2) -- (C2) -- cycle;
+    \node at (0.825,0.325) {\includegraphics[height=0.64\paperheight]{figures/pharo-beacon.pdf}};
+  \end{scope}
+
+  % ----- header: logo + tagline + intro -----
+  \node[anchor=north west, inner sep=0] (logo) at (0.07,0.015)
+       {\includegraphics[width=0.42\paperwidth]{figures/pharo-logo.pdf}};
+  \node[anchor=north west, text=blueB, font=\fs{36}] at (0.13,0.118)
+       {The live programming experience};
+
+  \node[anchor=north west, text width=0.40\paperwidth, text=ink, align=left, font=\fs{27}]
+       at (0.08,0.145) {%
+    Pharo is a pure open-source reflective object-oriented programming
+    language and a powerful environment, focused on simplicity and
+    immediate feedback. Fully written in itself.\par\vspace{6mm}
+    Pharo offers a unique immersive programming experience.
+    Amazing debugging experience.};
+
+  % ----- blue panel content -----
+  \begin{scope}[every node/.style={text=white, anchor=north west, align=left}]
+
+  % key figures
+  \node[text width=0.48\paperwidth] at (0.11,0.27) {%
+    Full syntax on half of a postcard\par\vspace{4mm}
+    \stat{740}{internal packages}
+    More than \num{3000}\,\,external projects\par\vspace{4mm}
+    \stat{30}{Universities use Pharo to teach OOP}
+    \stat{15}{international research groups use Pharo}
+    \stat{98}{committers}};
+
+  % industrial consortium
+  \node at (0.075,0.430) {\fs{80}\faIndustry};
+  \node at (0.165,0.425) {\head{Industrial Consortium}\\[-0.5mm]\url{https://consortium.pharo.org}};
+  \node[text width=0.50\paperwidth] at (0.10,0.475) {%
+    To structure the community\\
+    To sustain the development of Pharo\par\vspace{2mm}
+    \num{21}\,\,industrial members /\,\,\num{28}\,\,academic members};
+
+  % association
+  \node at (0.10,0.555) {\head{1 User Association}};
+  \node at (0.17,0.590) {\url{https://association.pharo.org}};
+  \node at (0.47,0.553) {\fs{100}\faUsers};
+
+  % books
+  \node at (0.09,0.640) {\head{29 open-source books}};
+  \node at (0.27,0.675) {\url{https://books.pharo.org}};
+  \node at (0.52,0.637) {\fs{100}\faBookOpen};
+
+  % mooc
+  \node at (0.07,0.716) {\fs{110}\faGraduationCap};
+  \node at (0.18,0.722) {\head{Two moocs}\\[-0.5mm]\quad\url{https://mooc.pharo.org}\\[-0.5mm]\quad\url{https://advanced-design-mooc.pharo.org}};
+  \node[text width=0.52\paperwidth] at (0.07,0.775) {%
+    {\itshape Covering Pharo, intro to advanced design, Pharo libraries
+    and web development}\par\vspace{5mm}
+    \num{1 K}\,\,participants\par\vspace{3mm}
+    \stat{93}{videos, 155 quiz}
+    \stat{6}{large exercises}
+    \stat{1}{full web application}
+    \stat{7}{challenges}};
+  \end{scope}
+
+  % Inria logo (bottom of the blue panel)
+  \node[anchor=center] at (0.43,0.945) {%
+    \IfFileExists{figures/inria.pdf}
+      {\includegraphics[width=0.20\paperwidth]{figures/inria.pdf}}
+      {\color{white}\heavy\itshape\fs{110}Inria}};
+
+  % ----- technology stack (bottom right) -----
+  \node[anchor=north east, align=right, text=ink] at (0.885,0.652)
+       {\head{Technology}\\[-4mm]\head{Stack}};
+  \node[anchor=north west, text=ink] at (0.893,0.660) {\fs{90}\faPuzzlePiece};
+
+  \node[anchor=north west, text width=0.27\paperwidth, text=ink, align=left, font=\fs{25}]
+       at (0.725,0.715) {%
+    \textbf{AI/MCP}\\
+    \textbf{Moose}\\
+    \textbf{Bloc, Toplo, Roassal}\\
+    \textbf{Metamodeling}\\
+    \textbf{Web development:}\\
+    \hspace*{6mm}- Seaside\\
+    \hspace*{6mm}- Teapot, REST\\
+    \textbf{Integration:} Jenkins, GitHub\\
+    \textbf{Persistence:}\\
+    \hspace*{6mm}- OO: GemStone\\
+    \hspace*{6mm}- NoSQL: MongoDB, UnQLite,\\\hspace*{12mm}Tokyo, Redis\\
+    \hspace*{6mm}- Relational: Postgres,\\\hspace*{12mm}MySQL, SQLite\\
+    \textbf{Platforms:}\\
+    \hspace*{6mm}- Linux, Windows, macOS\\
+    \hspace*{6mm}- Mobile: iOS\\
+    \hspace*{6mm}- Raspbian};
+
+  % open source initiative badge
+  \node[anchor=south, align=center, text=ink, font=\fs{20}] at (0.68,0.988) {%
+    {\color{osigreen}\fs{95}\faOsi}\\[2mm]
+    {\heavy open source}\\[-1mm] initiative\\[-1mm] MIT};
+\end{tikzpicture}
+\end{document}
