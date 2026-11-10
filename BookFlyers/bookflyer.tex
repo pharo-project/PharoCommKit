@@ -1,0 +1,95 @@
+% Shared layout for the Pharo book flyers.
+% Each book folder has a <name>.tex that \input's this file, sets the book data
+% and calls \MakeSheet.  Result: one landscape A4 sheet with two identical
+% A5 portrait flyers (148.5 x 210 mm) separated by a dashed cut line.
+% Compile twice (TikZ overlay) with pdflatex, lualatex or xelatex.
+
+\makeatletter
+\usepackage[a4paper,landscape,margin=0mm]{geometry}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+  \usepackage[sfdefault]{FiraSans}
+  \newcommand{\heavy}{\fontseries{b}\selectfont}
+\else
+  \usepackage{fontspec}
+  \setmainfont{Fira Sans}[BoldFont=*-SemiBold]
+  \newfontfamily\heavy{Fira Sans}[UprightFont=*-Bold, ItalicFont=*-BoldItalic]
+\fi
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{fontawesome5}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\hyphenpenalty=10000\exhyphenpenalty=10000
+
+% ---------- colours (same family as the Pharo poster) ----------
+\definecolor{panelA}{HTML}{E4E5EB}
+\definecolor{panelB}{HTML}{D3D5DE}
+\definecolor{ink}{HTML}{1F2A3A}
+\definecolor{pharoblue}{HTML}{2E5089}
+
+\newcommand{\fs}[2][1.2]{\fontsize{#2}{#1\dimexpr#2pt\relax}\selectfont}
+
+% ---------- book data, set by each book file ----------
+\newcommand{\BookTitle}[1]{\def\bf@title{#1}}
+\newcommand{\TitleSize}[1]{\def\bf@titlesize{#1}}       % in pt
+\newcommand{\Authors}[1]{\def\bf@authors{#1}}
+\newcommand{\Cover}[1]{\def\bf@cover{#1}}
+\newcommand{\Description}[1]{\def\bf@desc{#1}}
+\newcommand{\Items}[1]{\def\bf@items{#1}}
+\newcommand{\BookURL}[1]{\def\bf@url{#1}}                % printed under the QR code
+\TitleSize{28}
+
+% Pharo tagline shared by all flyers
+\newcommand{\PharoIntro}{Pharo is a clean, innovative, open-source,
+  live-programming environment.}
+
+% ---------- one A5 flyer, origin = its top-left corner, units mm, y down ----------
+\newcommand{\OneFlyer}{%
+  % panels
+  \fill[panelA] (6,6) rectangle (142.5,103);
+  \fill[panelB] (6,106) rectangle (142.5,193);
+  % title + authors (top left)
+  \node[anchor=west, text width=60mm, align=left, text=ink] at (10,54.5) {%
+    {\heavy\fs[1.05]{\bf@titlesize}\bf@title}\par\vspace{5mm}
+    {\color{pharoblue}\fs{9}\itshape \bf@authors}};
+  % cover (top right)
+  \node[anchor=east, inner sep=0, draw=white, line width=0.6mm] at (138.5,54.5)
+    {\includegraphics[height=88mm,width=64mm,keepaspectratio]{\bf@cover}};
+  % description
+  \node[anchor=north west, text width=124mm, align=left, text=ink, inner sep=0]
+    at (10.5,111) {\fs[1.3]{10}\PharoIntro\par\vspace{2.5mm}\bf@desc};
+  % "Including" list
+  \node[anchor=south west, text width=86mm, align=left, text=ink, inner sep=0]
+    at (10.5,188.5) {\fs[1.3]{10}{\heavy Including:}\par\vspace{0.5mm}
+      \begin{itemize}[label={--}, leftmargin=6mm, nosep]\bf@items\end{itemize}};
+  % QR code + call to action
+  \node[anchor=south east, inner sep=0] (qr) at (138.5,183)
+    {\includegraphics[width=32mm]{figures/qrcode.pdf}};
+  \node[anchor=south, text=pharoblue, inner sep=0] at ([yshift=2.5mm]qr.north)
+    {\heavy\itshape\fs{12}Get it, it's open!};
+  \node[anchor=north, text=ink, inner sep=0] at ([yshift=-1.5mm]qr.south)
+    {\adjustbox{max width=32mm}{\fs{7}\bf@url}};
+  % footer
+  \node[anchor=west, inner sep=0] at (8,200.5)
+    {\includegraphics[height=7mm]{figures/pharo-logo.pdf}};
+  \node[anchor=east, text=ink, inner sep=0] at (140.5,200.5)
+    {\fs{8.5}Free books: {\heavy books.pharo.org}\quad$\cdot$\quad{\heavy pharo.org}};
+}
+
+% ---------- the A4 sheet: two copies + cut line ----------
+\newcommand{\MakeSheet}{%
+  \begin{tikzpicture}[remember picture, overlay, x=1mm, y=-1mm,
+      shift={(current page.north west)}]
+    \fill[white] (0,0) rectangle (297,210);
+    \begin{scope}\OneFlyer\end{scope}
+    \begin{scope}[shift={(148.5,0)}]\OneFlyer\end{scope}
+    \draw[gray, dashed, line width=0.2mm] (148.5,0) -- (148.5,210);
+    \node[gray, fill=white, inner sep=0.6mm, rotate=-90] at (148.5,4) {\fs{9}\faCut};
+  \end{tikzpicture}%
+  \null}
+\makeatother

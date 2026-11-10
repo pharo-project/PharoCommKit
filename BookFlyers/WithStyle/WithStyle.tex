@@ -1,0 +1,21 @@
+% Flyer for "Pharo with Style" -- two A5 copies on a landscape A4 sheet.
+% Compile twice:  pdflatex WithStyle   (layout shared in ../bookflyer.tex)
+\documentclass{article}
+\input{../bookflyer}
+
+\BookTitle{Pharo\\with Style}
+\TitleSize{30}
+\Authors{Stéphane Ducasse}
+\Cover{figures/cover.jpg}
+\BookURL{books.pharo.org/booklet-WithStyle}
+\Description{Writing software is one thing. Writing software that other programmers can read, and that communicates well, is another. \textbf{Pharo with Style} is about this huge difference: it presents guidelines to improve your program-writing skills. New 2022 edition, also available as a printed book.}
+\Items{
+    \item Naming classes, methods and variables
+    \item Comments that help the reader
+    \item Code formatting and layout
+    \item Powerful Pharo idioms
+    \item Common mistakes to avoid}
+
+\begin{document}
+\MakeSheet
+\end{document}
